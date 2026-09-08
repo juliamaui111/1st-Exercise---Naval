@@ -1,0 +1,28 @@
+using System;
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("enter your name: ");
+        string name = Console.ReadLine();
+
+        Console.Write("enter your age: ");
+        int age = Convert.ToInt32(Console.ReadLine());
+
+        Console.Write("enter your course: ");
+        string course = Console.ReadLine();
+
+        Console.Write("enter your favorite color: ");
+        string color = Console.ReadLine();
+
+        Console.Write("enter your city: ");
+        string city = Console.ReadLine();
+
+        Console.WriteLine("\n====== User Information ======");
+        Console.WriteLine("Name: " + name);
+        Console.WriteLine("Age: " + age);
+        Console.WriteLine("Course: " + course);
+        Console.WriteLine("Favorite Color: " + color);
+        Console.WriteLine("City: " + city);
+    }
+}
