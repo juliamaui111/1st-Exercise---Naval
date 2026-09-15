@@ -628,5 +628,327 @@ public partial class MainWindow : Window
 
 // 7. CHOOSE A DOOR
 // MainWindow.axaml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="ChooseADoor.MainWindow"
+        Title="Choose a Door"
+        Width="600"
+        Height="400"
+        Background="#FFF4B8">
+
+    <Grid Margin="30">
+
+        <Border Background="#FFFDF5"
+                CornerRadius="25"
+                Padding="30">
+
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="20">
+
+                <TextBlock Text="CHOOSE A DOOR"
+                           FontSize="34"
+                           FontWeight="Bold"
+                           Foreground="#6B5635"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Choose Door 1, 2, or 3!"
+                           FontSize="18"
+                           Foreground="#806D4A"
+                           HorizontalAlignment="Center"/>
+
+                <TextBox x:Name="txtDoor"
+                         Width="220"
+                         Height="45"
+                         FontSize="18"
+                         Watermark="Enter door number"
+                         Background="#FFF8D8"
+                         Foreground="#5C4825"
+                         HorizontalContentAlignment="Center"/>
+
+                <Button x:Name="btnOpen"
+                        Content="Open Door"
+                        Width="180"
+                        Height="50"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Background="#F7D96B"
+                        Foreground="#5C4825"
+                        BorderBrush="#D9B94A"
+                        BorderThickness="2"
+                        Click="btnOpen_Click"/>
+
+                <TextBlock x:Name="lblResult"
+                           Text="Choose a door!"
+                           FontSize="19"
+                           FontWeight="Bold"
+                           Foreground="#6B5635"
+                           HorizontalAlignment="Center"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+
+</Window>
 
 // MainWindow.axaml.cs
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using System;
+
+namespace ChooseADoor;
+
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+
+    private void btnOpen_Click(object? sender, RoutedEventArgs e)
+    {
+        int door = Convert.ToInt32(txtDoor.Text);
+
+        switch (door)
+        {
+            case 1:
+                lblResult.Text = "💰 You found treasure!";
+                break;
+
+            case 2:
+                lblResult.Text = "👾 A monster appeared!";
+                break;
+
+            case 3:
+                lblResult.Text = "🧪 You found a magic potion!";
+                break;
+
+            default:
+                lblResult.Text = "Choose Door 1, 2, or 3.";
+                break;
+        }
+    }
+}
+
+// 8. HEART COLLECTOR
+// MainWindow.axaml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HeartCollector.MainWindow"
+        Title="Heart Collector"
+        Width="650"
+        Height="500"
+        Background="#EADCF8">
+       
+    <Grid Margin="30">
+
+        <Border Background="#FFF8F0"
+                CornerRadius="30"
+                Padding="35">
+
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="18">
+
+                <TextBlock Text="♡ HEART COLLECTOR ♡"
+                           FontSize="32"
+                           FontWeight="Bold"
+                           Foreground="#765A8A"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Collect little hearts to restore your magic!"
+                           FontSize="17"
+                           Foreground="#9A7FA8"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="♥   ♥   ♥   ♥   ♥"
+                           FontSize="28"
+                           Foreground="#D98FAF"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock x:Name="lblHealth"
+                           Text="Health: 0%"
+                           FontSize="22"
+                           FontWeight="Bold"
+                           Foreground="#765A8A"
+                           HorizontalAlignment="Center"/>
+
+                <ProgressBar x:Name="progressBar1"
+                             Width="400"
+                             Height="28"
+                             Minimum="0"
+                             Maximum="100"
+                             Value="0"/>
+
+                <Button x:Name="btnHeal"
+                        Content="♡ Collect a Heart ♡"
+                        Width="240"
+                        Height="55"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Background="#F2B8CC"
+                        Foreground="#5F466D"
+                        BorderBrush="#D89AB4"
+                        BorderThickness="2"
+                        CornerRadius="20"
+                        Click="btnHeal_Click"/>
+
+                <TextBlock Text="✦ Believe in a little magic ✦"
+                           FontSize="15"
+                           FontStyle="Italic"
+                           Foreground="#A889B5"
+                           HorizontalAlignment="Center"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+
+</Window>
+
+// MainWindow.axaml.cs
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+
+namespace HeartCollector;
+
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+
+    private void btnHeal_Click(object? sender, RoutedEventArgs e)
+{
+    if (progressBar1.Value < 100)
+    {
+        progressBar1.Value += 10;
+
+        lblHealth.Text = "Health: " + progressBar1.Value + "%";
+    }
+
+    if (progressBar1.Value >= 100)
+    {
+        lblHealth.Text = "Health Full! ♥";
+        btnHeal.IsEnabled = false;
+    }
+}
+}
+
+// 9. STAR COLLECTOR
+// MainWindow.axaml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="StarCollector.MainWindow"
+        Title="Star Collector"
+        Width="700"
+        Height="500"
+        Background="#101A3A">
+
+    <Grid Margin="30">
+
+        <Border Background="#182653"
+                CornerRadius="30"
+                Padding="35"
+                BorderBrush="#F6D77A"
+                BorderThickness="2">
+
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="18">
+
+                <TextBlock Text="✦ STAR COLLECTOR ✦"
+                           FontSize="34"
+                           FontWeight="Bold"
+                           Foreground="#F6D77A"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Collect the stars, one by one! ✨"
+                           FontSize="18"
+                           Foreground="#D8DDF5"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="☾     ✦     ✧     ✦     ☽"
+                           FontSize="28"
+                           Foreground="#F6D77A"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock x:Name="lblStars"
+                           Text="Your stars will appear here..."
+                           FontSize="25"
+                           Foreground="#FFF3B0"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock x:Name="lblCount"
+                           Text="Stars Collected: 0 / 10"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           Foreground="#D8DDF5"
+                           HorizontalAlignment="Center"/>
+
+                <Button x:Name="btnStars"
+                        Content="✦ Collect a Star ✦"
+                        Width="240"
+                        Height="55"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Background="#F6D77A"
+                        Foreground="#182653"
+                        Click="btnStars_Click"/>
+
+                <TextBlock Text="⋆｡°✩ A little magic at a time ✩°｡⋆"
+                           FontSize="15"
+                           FontStyle="Italic"
+                           Foreground="#AEB8E8"
+                           HorizontalAlignment="Center"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+
+</Window>
+
+// MainWindow.axaml.cs
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+
+namespace StarCollector;
+
+public partial class MainWindow : Window
+{
+    private int starCount = 0;
+    private string stars = "";
+
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+
+    private void btnStars_Click(object? sender, RoutedEventArgs e)
+    {
+        if (starCount < 10)
+        {
+            starCount++;
+
+            for (int i = 1; i <= 1; i++)
+            {
+                stars += "⭐ ";
+            }
+
+            lblStars.Text = stars;
+            lblCount.Text = "Stars Collected: " + starCount + " / 10";
+        }
+
+        if (starCount == 10)
+        {
+            lblStars.Text = stars + "\n\n✨ You collected all the stars! ✨";
+            btnStars.IsEnabled = false;
+        }
+    }
+}
