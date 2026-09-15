@@ -1,0 +1,632 @@
+// 1. TREASURE HUNT
+// MainWindow.axaml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="WhileFormApp.MainWindow"
+        Title="Treasure Hunt"
+        Width="800"
+        Height="500">
+
+    <Canvas>
+
+        <!-- Cute Background -->
+        <Image Source="avares://WhileFormApp/Assets/background.jpeg"
+               Width="800"
+               Height="500"
+               Stretch="Fill"/>
+
+        <!-- Game Title -->
+        <TextBlock Text="TREASURE HUNT"
+                   FontSize="32"
+                   FontWeight="Bold"
+                   Canvas.Left="285"
+                   Canvas.Top="30"/>
+
+        <!-- Character -->
+        <Image x:Name="imgCharacter"
+               Source="avares://WhileFormApp/Assets/character.png"
+               Width="100"
+               Height="100"
+               Canvas.Left="50"
+               Canvas.Top="200"/>
+
+        <!-- Treasure -->
+        <Image x:Name="imgTreasure"
+               Source="avares://WhileFormApp/Assets/treasure.png"
+               Width="80"
+               Height="80"
+               Canvas.Left="650"
+               Canvas.Top="210"/>
+
+        <!-- Status -->
+        <TextBlock x:Name="lblStatus"
+                   Text="Find the Gem!"
+                   FontSize="20"
+                   Canvas.Left="320"
+                   Canvas.Top="350"/>
+
+        <!-- Start Button -->
+        <Button x:Name="btnSTART"
+                Content="Start Game"
+                Width="180"
+                Height="50"
+                Canvas.Left="310"
+                Canvas.Top="400"
+                Click="btnSTART_Click"/>
+
+    </Canvas>
+
+</Window>
+
+// MainWindow.axaml.cs
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using System.Threading.Tasks;
+
+namespace WhileFormApp;
+
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+
+    private async void btnSTART_Click(object? sender, RoutedEventArgs e)
+    {
+        btnSTART.IsEnabled = false;
+        lblStatus.Text = "Moving to the treasure...";
+
+        double startX = 50;
+        double treasureX = 650;
+
+        double currentX = startX;
+
+        while (currentX < treasureX)
+        {
+            currentX += 10;
+
+            Canvas.SetLeft(imgCharacter, currentX);
+
+            await Task.Delay(50);
+        }
+
+        lblStatus.Text = "You found the Gem!";
+
+        btnSTART.IsEnabled = true;
+    }
+}
+
+// WhileFormApp.csproj
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.2" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.2" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.2" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.2" />
+
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+</Project>
+
+// 2. TREASURE HUNT SCORE HUNTER
+// MainWindow.axaml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="TreasureHuntScoreCounter.MainWindow"
+        Title="Treasure Hunt Score Counter"
+        Width="700"
+        Height="500"
+        Background="#FFF4B8">
+
+    <Grid Margin="30">
+
+        <!-- Main dirty white card -->
+        <Border Background="#FFFDF5"
+                CornerRadius="25"
+                Padding="30">
+
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="18">
+
+                <!-- Title -->
+                <TextBlock Text="TREASURE HUNT"
+                           FontSize="36"
+                           FontWeight="Bold"
+                           Foreground="#6B5635"
+                           HorizontalAlignment="Center"/>
+
+                <!-- Subtitle -->
+                <TextBlock Text="Collect the treasures!"
+                           FontSize="20"
+                           Foreground="#806D4A"
+                           HorizontalAlignment="Center"/>
+
+                <!-- Yellow button -->
+                <Button x:Name="btnPlay"
+                        Content="Collect Treasure"
+                        Width="230"
+                        Height="55"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Background="#F7D96B"
+                        Foreground="#5C4825"
+                        BorderBrush="#D9B94A"
+                        BorderThickness="3"
+                        HorizontalAlignment="Center"
+                        Click="btnPlay_Click"/>
+
+                <!-- Score area -->
+                <Border Background="#FFF8D8"
+                        BorderBrush="#E5C95C"
+                        BorderThickness="2"
+                        CornerRadius="15"
+                        Padding="10">
+
+                    <ListBox x:Name="lstScore"
+                             Width="330"
+                             Height="210"
+                             Background="#FFF8D8"
+                             Foreground="#5C4825"
+                             BorderThickness="0"
+                             HorizontalAlignment="Center"/>
+
+                </Border>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+
+</Window>
+
+// MainWindow.axaml.cs
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+
+namespace TreasureHuntScoreCounter;
+
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+
+    private void btnPlay_Click(object? sender, RoutedEventArgs e)
+    {
+        lstScore.Items.Clear();
+
+        int treasure = 1;
+
+        while (treasure <= 10)
+        {
+            lstScore.Items.Add("Treasure " + treasure);
+            treasure++;
+        }
+    }
+}
+
+// 3. GUESS THE SECRET NUMBER
+// MainWindow.axaml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="GuessSecretNumber.MainWindow"
+        Title="Guess the Secret Number"
+        Width="600"
+        Height="400"
+        Background="#FFF4B8">
+
+    <Grid Margin="30">
+
+        <Border Background="#FFFDF5"
+                CornerRadius="25"
+                Padding="30">
+
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="20">
+
+                <TextBlock Text="GUESS THE SECRET NUMBER"
+                           FontSize="30"
+                           FontWeight="Bold"
+                           Foreground="#6B5635"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Guess a number from 1 to 10!"
+                           FontSize="18"
+                           Foreground="#806D4A"
+                           HorizontalAlignment="Center"/>
+
+                <TextBox x:Name="txtGuess"
+                         Width="220"
+                         Height="45"
+                         FontSize="18"
+                         Watermark="Enter your guess"
+                         Background="#FFF8D8"
+                         Foreground="#5C4825"
+                         HorizontalContentAlignment="Center"/>
+
+                <Button x:Name="btnGuess"
+                        Content="Guess"
+                        Width="180"
+                        Height="50"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Background="#F7D96B"
+                        Foreground="#5C4825"
+                        BorderBrush="#D9B94A"
+                        BorderThickness="2"
+                        Click="btnGuess_Click"/>
+
+                <TextBlock x:Name="lblMessage"
+                           Text="Make your guess!"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           Foreground="#6B5635"
+                           HorizontalAlignment="Center"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+
+</Window>
+
+// MainWindow.axaml.cs
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+
+namespace GuessSecretNumber;
+
+public partial class MainWindow : Window
+{
+    private int secretNumber = 7;
+
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+
+    private void btnGuess_Click(object? sender, RoutedEventArgs e)
+    {
+        if (int.TryParse(txtGuess.Text, out int guess))
+        {
+            if (guess < secretNumber)
+            {
+                lblMessage.Text = "Too low! Try again.";
+            }
+            else if (guess > secretNumber)
+            {
+                lblMessage.Text = "Too high! Try again.";
+            }
+            else
+            {
+                lblMessage.Text = "Correct! You found the secret number!";
+                btnGuess.IsEnabled = false;
+            }
+        }
+        else
+        {
+            lblMessage.Text = "Please enter a number from 1 to 10.";
+        }
+    }
+}
+
+// 4. COIN COLLECTOR
+// MainWindow.axaml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="CoinCollector.MainWindow"
+        Title="Coin Collector"
+        Width="600"
+        Height="400"
+        Background="#FFF4B8">
+
+    <Grid Margin="30">
+
+        <Border Background="#FFFDF5"
+                CornerRadius="25"
+                Padding="30">
+
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="20">
+
+                <TextBlock Text="COIN COLLECTOR"
+                           FontSize="34"
+                           FontWeight="Bold"
+                           Foreground="#6B5635"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Collect coins until you reach 100!"
+                           FontSize="18"
+                           Foreground="#806D4A"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock x:Name="lblCoins"
+                           Text="Coins: 0"
+                           FontSize="28"
+                           FontWeight="Bold"
+                           Foreground="#6B5635"
+                           HorizontalAlignment="Center"/>
+
+                <Button x:Name="btnCollect"
+                        Content="Collect Coin"
+                        Width="200"
+                        Height="55"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Background="#F7D96B"
+                        Foreground="#5C4825"
+                        BorderBrush="#D9B94A"
+                        BorderThickness="2"
+                        Click="btnCollect_Click"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+
+</Window>
+
+// MainWindow.axaml.cs
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+
+namespace CoinCollector;
+
+public partial class MainWindow : Window
+{
+    private int coins = 0;
+
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+
+    private void btnCollect_Click(object? sender, RoutedEventArgs e)
+    {
+        do
+        {
+            coins += 10;
+            lblCoins.Text = "Coins: " + coins;
+        }
+        while (coins < 10);
+
+        if (coins >= 100)
+        {
+            lblCoins.Text = "Coins: 100 - You Win!";
+            btnCollect.IsEnabled = false;
+        }
+    }
+}
+// 5. MONSTER BATTLE
+// MainWindow.axaml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="MonsterBattle.MainWindow"
+        Title="Monster Battle"
+        Width="600"
+        Height="400"
+        Background="#FFF4B8">
+
+    <Grid Margin="30">
+
+        <Border Background="#FFFDF5"
+                CornerRadius="25"
+                Padding="30">
+
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="20">
+
+                <TextBlock Text="MONSTER BATTLE"
+                           FontSize="34"
+                           FontWeight="Bold"
+                           Foreground="#6B5635"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Defeat the monster!"
+                           FontSize="18"
+                           Foreground="#806D4A"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock x:Name="lblResult"
+                           Text="Monster HP: 50"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="#6B5635"
+                           HorizontalAlignment="Center"/>
+
+                <Button x:Name="btnFight"
+                        Content="Attack!"
+                        Width="200"
+                        Height="55"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Background="#F7D96B"
+                        Foreground="#5C4825"
+                        BorderBrush="#D9B94A"
+                        BorderThickness="2"
+                        Click="btnFight_Click"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+
+</Window>
+
+// MainWindow.axaml.cs
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+
+namespace MonsterBattle;
+
+public partial class MainWindow : Window
+{
+    private int monsterHP = 50;
+
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+
+    private void btnFight_Click(object? sender, RoutedEventArgs e)
+    {
+        do
+        {
+            monsterHP -= 10;
+        }
+        while (monsterHP > 40);
+
+        if (monsterHP > 0)
+        {
+            lblResult.Text = "Monster HP: " + monsterHP;
+        }
+        else
+        {
+            lblResult.Text = "Monster defeated! You win!";
+            btnFight.IsEnabled = false;
+        }
+    }
+}
+
+// 6. CHOOSE A WEAPON
+// MainWindow.axaml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="ChooseAWeapon.MainWindow"
+        Title="Choose a Weapon"
+        Width="600"
+        Height="400"
+        Background="#FFF4B8">
+
+    <Grid Margin="30">
+
+        <Border Background="#FFFDF5"
+                CornerRadius="25"
+                Padding="30">
+
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="20">
+
+                <TextBlock Text="CHOOSE A WEAPON"
+                           FontSize="32"
+                           FontWeight="Bold"
+                           Foreground="#6B5635"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Choose your weapon!"
+                           FontSize="18"
+                           Foreground="#806D4A"
+                           HorizontalAlignment="Center"/>
+
+                <ComboBox x:Name="cmbWeapon"
+                          Width="220"
+                          Height="45"
+                          FontSize="18"
+                          Background="#FFF8D8"
+                          Foreground="#5C4825"
+                          HorizontalContentAlignment="Center">
+
+                    <ComboBoxItem Content="Sword"/>
+                    <ComboBoxItem Content="Bow"/>
+                    <ComboBoxItem Content="Magic"/>
+
+                </ComboBox>
+
+                <Button x:Name="btnFight"
+                        Content="Fight!"
+                        Width="180"
+                        Height="50"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Background="#F7D96B"
+                        Foreground="#5C4825"
+                        BorderBrush="#D9B94A"
+                        BorderThickness="2"
+                        Click="btnFight_Click"/>
+
+                <TextBlock x:Name="lblResult"
+                           Text="Select a weapon first!"
+                           FontSize="19"
+                           FontWeight="Bold"
+                           Foreground="#6B5635"
+                           HorizontalAlignment="Center"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+
+</Window>
+
+// MainWindow.axaml.cs
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+
+namespace ChooseAWeapon;
+
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+
+    private void btnFight_Click(object? sender, RoutedEventArgs e)
+    {
+        string weapon = cmbWeapon.SelectedItem is ComboBoxItem item
+            ? item.Content?.ToString() ?? ""
+            : "";
+
+        switch (weapon)
+        {
+            case "Sword":
+                lblResult.Text = "⚔️ You attacked with a Sword!";
+                break;
+
+            case "Bow":
+                lblResult.Text = "🏹 You attacked with a Bow!";
+                break;
+
+            case "Magic":
+                lblResult.Text = "✨ You cast a Magic Spell!";
+                break;
+
+            default:
+                lblResult.Text = "Select a weapon first!";
+                break;
+        }
+    }
+}
+
+// 7. CHOOSE A DOOR
+// MainWindow.axaml
+
+// MainWindow.axaml.cs
